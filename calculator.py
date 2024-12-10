@@ -167,7 +167,7 @@ def from_base(digits, base):
 
 def repl():
     print("Arbitrary Precision Integer Calculator")
-    print("Supported operations: +, -, *, /, %, ^")
+    print("Supported operations: +, -, *, /, %, ^, !, log10, base")
     print("Type 'exit' to quit.")
 
     while True:
@@ -175,25 +175,39 @@ def repl():
         if expr.lower() == "exit":
             break
         try:
-            num1, op, num2 = expr.split()
-            num1 = str_to_digits(num1)
-            num2 = str_to_digits(num2)
-
-            if op == "+":
-                result = add(num1, num2)
-            elif op == "-":
-                result = subtract(num1, num2)
-            elif op == "*":
-                result = multiply(num1, num2)
-            elif op == "/":
-                result, _ = divide(num1, num2)
-            elif op == "%":
-                result = modulo(num1, num2)
-            elif op == "^":
-                result = power(num1, num2)
-            else:
-                print("Unsupported operation.")
+            if "!" in expr:  # Factorial
+                num = str_to_digits(expr.replace("!", "").strip())
+                result = factorial(num)
+            elif "log10" in expr:  # Logarithm
+                num = str_to_digits(expr.replace("log10", "").strip())
+                result = log10(num)
+            elif "base" in expr:  # Base conversion
+                parts = expr.split()
+                num = str_to_digits(parts[1])
+                base = int(parts[2])
+                result = to_base(num, base)
+                print("Result in base", base, ":", digits_to_str(result))
                 continue
+            else:  # Regular operations
+                num1, op, num2 = expr.split()
+                num1 = str_to_digits(num1)
+                num2 = str_to_digits(num2)
+
+                if op == "+":
+                    result = add(num1, num2)
+                elif op == "-":
+                    result = subtract(num1, num2)
+                elif op == "*":
+                    result = multiply(num1, num2)
+                elif op == "/":
+                    result, _ = divide(num1, num2)
+                elif op == "%":
+                    result = modulo(num1, num2)
+                elif op == "^":
+                    result = power(num1, num2)
+                else:
+                    print("Unsupported operation.")
+                    continue
 
             print(digits_to_str(result))
         except Exception as e:
