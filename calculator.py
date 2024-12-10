@@ -135,6 +135,13 @@ def factorial(num):
 
     return result
 
+def log10(num):
+    """Compute the integer part of log10 for an arbitrary-precision number."""
+    if compare(num, [0]) <= 0:
+        raise ValueError("Logarithm is undefined for non-positive numbers.")
+
+    return [len(num) - 1]
+
 
 def repl():
     print("Arbitrary Precision Integer Calculator")
