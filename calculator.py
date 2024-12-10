@@ -121,6 +121,20 @@ def power(base, exponent):
     for _ in range(int(digits_to_str(exponent))):  # Convert exponent to integer
         result = multiply(result, base)
     return result
+def factorial(num):
+    """Compute the factorial of a number represented as a digit list."""
+    if compare(num, [0]) == 0:  # 0! = 1
+        return [1]
+    
+    result = [1]
+    current = [1]
+
+    while compare(current, num) <= 0:  # current <= num
+        result = multiply(result, current)
+        current = add(current, [1])  # Increment current by 1
+
+    return result
+
 
 def repl():
     print("Arbitrary Precision Integer Calculator")
