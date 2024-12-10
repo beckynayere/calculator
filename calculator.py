@@ -142,6 +142,28 @@ def log10(num):
 
     return [len(num) - 1]
 
+def to_base(num, base):
+    """Convert a base-10 number (digit list) to another base."""
+    if compare(num, [0]) == 0:
+        return [0]
+
+    result = []
+    while compare(num, [0]) > 0:
+        _, remainder = divide(num, [base])
+        result.append(remainder[0])
+        num = divide(num, [base])[0]  # Update num as the quotient
+
+    return result[::-1]  # Reverse the result
+
+def from_base(digits, base):
+    """Convert a number in another base back to base-10."""
+    result = [0]
+    for digit in digits:
+        result = multiply(result, [base])
+        result = add(result, [digit])
+
+    return result
+
 
 def repl():
     print("Arbitrary Precision Integer Calculator")
